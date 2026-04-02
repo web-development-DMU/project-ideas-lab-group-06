@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group 07</title>
+    <link rel="stylesheet" href="/style.css">
+
+    <style>
+        main {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(500px, 100%), 1fr));
+            gap: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Group 07</h1>
+        <nav>
+            <a href="/">home</a>
+            <a href="/people">people</a>
+            <a href="/proposals">proposals</a>
+            <a href="/teams">teams</a>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2> A Penny For a Thought</h2>
+            <p>
+                proposed by: <a href="/people/P2872183.html">Thanaa Sulum</a>
+            </p>
+            <h3>Project Description</h3>
+            <p>
+                This projects aims to create a web application, that encourages users to take control of their finances, by allowing them to track their expenses, 
+                record their daily spending, and reflect on the emotional and psychological aspect of their spending habits. 
+                The application will also allow users to set savings goals, and track their progress towards their goals, as well as provide insights and analytics about their spendings habits.
+                 Rather than simply being a budgeting dashboard, the application promotes self-awareness and accountability.</p>
+
+            <P> 
+                This web application will be designed to be user friendly, there wont be any administrators, as users would completely manage their own accounts.
+            </P>
+
+            <h3>User requirements:</h3>
+            <ul> 
+                <li>User should be able to create their own profile</li>
+                <li>User should be able to import and export data </li>
+                <li>User should be able to add expenses and income</li>
+                <li>User should be able to make reflections on their expenses</li>
+                <li>User should be able to set and track savings goals </li>
+                <li>User should be able to view insights about their spending habits</li>
+                <li>SHALL I INCLUDE USER STORIES?????????</li>
+            </ul>
+
+            <h3>Ideas for a basic database structure: </h3>
+            <ul>
+                <li>user: email, user_id (PK), username, password_hash, created_at</li>
+                <li>saving_goals: created_at, completion_status, target_amount, goal_name, user_id (FK), goal_id(PK)</li>
+                <li>Saving_entries: saving_entry_id, saving_id(FK), goal_id(FK), amount, date </li>
+                <li>transaction: reflection_note,mood , created_at, category, type(expense/income), transaction_date, amount, user_id(FK), description</li>
+                <li>daily_summary: daily_total_id(PK), user_id(FK), date, target_spent_total, created_at</li>   
+             </ul>
+
+             <!-- these are the same things btw-->
+            <h3> Data requirements </h3>
+              <!-- include data requirment template diagram -->
+              <ul> 
+                <li>User authentication data (accounts and privacy).</li>
+                <li>Transaction records (amount, category, date, optional reflection).</li>
+                <li>Savings goals and savings entries to track progress.</li>
+                <li>Insights data to provide feedback on spending habits.</li>
+              </ul>
+
+             <!-- Links to any relevant web pages. -->
+             <!--Images, e.g. screenshots as inspiration-->
+             <!-- What are the biggest challenges -->
+
+            <h3>Challenges</h3>
+              <ul>
+                <li>...we'll get back to this later </li>
+              </ul>
+
+
+            <h3>A list of possible names for the application: </h3>
+                <ul>
+                    <li>MoneyManager</li>
+                    <li>Genie in a bottle</li>
+                    <li>L...something...Ledger</li>
+                    <li>I'm not sure what else to add here</li>
+
+                </ul>
+            
+
+            <h3>Resources: </h3>
+            <ul>
+                <li>indivual profile page</li>
+                <li>expense tracking page </li>
+                <li>Expense journal/reflection page</li>
+                <li>savings goal page </li>
+                <li>insights page</li>
+            </ul>
+        </section>
+
+
+        <section>
+        <h2> Undecided</h2>
+        <p> Undecided project, details will be added later... Thanaa Sulum is soley involved for now</p>
+        <ul>
+            <li> <a href="/teams/undecided.html">Undecided Team</a> is working on this. </li>
+        </ul>
+        </section>
+    </main>
+</body>
+
+</html>
+        
+
+                
+
+
+            
+

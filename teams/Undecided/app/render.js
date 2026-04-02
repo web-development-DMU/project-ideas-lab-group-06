@@ -1,4 +1,5 @@
-export default function render(content, status = 200) {
+export default function render(viewFn, status = 200) {
+  const content = viewFn();
   const headers = new Headers();
 
   headers.set("Content-Type", "text/html");
@@ -14,14 +15,19 @@ export default function render(content, status = 200) {
         </head>
         <body>
         <header>
-            <h1>A Penny For A Thought</h1>
+            <h1>Welcome, to A Penny For A Thought</h1>
             <nav>
                 <a href="/">Home</a>
                 <a href="/about">About</a>
                 <a href="/teams">Teams</a>
             </nav>
         </header>
+        <main>
             ${content}
+        </main>
+        <footer>
+            <p>&copy; 2024 A Penny For A Thought. All rights reserved.</p>
+        </footer>
         </body>
         </html>
         `;

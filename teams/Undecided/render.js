@@ -1,0 +1,29 @@
+export default function render(content, status = 200) {
+  const headers = new Headers();
+
+  headers.set("Content-Type", "text/html");
+  const html = `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="icon" href="/assets/icon.svg">
+            <link rel="stylesheet" href="/assets/styles.css">
+            <title>A Penny For A Thought</title>
+        </head>
+        <body>
+        <header>
+            <h1>A Penny For A Thought</h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about">About</a>
+                <a href="/teams">Teams</a>
+            </nav>
+        </header>
+            ${content}
+        </body>
+        </html>
+        `;
+  return new Response(html, { headers, status });
+}

@@ -1,0 +1,169 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: "Inter", system-ui, sans-serif;
+    background: linear-gradient(180deg, #0f401e, #296b37);
+    color: #e8f5e9;
+}
+
+header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background: rgba(15, 64, 30, 0.35);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(232, 245, 233, 0.15);
+}
+
+/* Hide checkbox visually, but keep it usable */
+input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+label {
+    width: 1.75rem;
+    height: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    z-index: 3;
+}
+
+label>span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background: white;
+    border-radius: 999px;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+/* Menu base state */
+nav {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 64, 30, 0.95);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    transform: translateX(100%);
+    transition: transform 0.4s ease;
+    z-index: 2;
+}
+
+nav a {
+    text-decoration: none;
+    color: inherit;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+nav a:hover {
+    color: #ffffff;
+    text-shadow: 0 0 8px rgba(200, 255, 200, 0.6);
+}
+
+/* Checkbox checked state */
+header:has(input:checked) nav {
+    transform: translateX(0);
+}
+
+header:has(input:checked) {
+    background: rgba(41, 107, 55, 0.85);
+}
+
+header:has(input:checked) label>span:nth-child(1) {
+    transform: translateY(0.55rem) rotate(45deg);
+}
+
+header:has(input:checked) label>span:nth-child(2) {
+    opacity: 0;
+}
+
+header:has(input:checked) label>span:nth-child(3) {
+    transform: translateY(-0.55rem) rotate(-45deg);
+}
+
+main {
+    display: grid;
+    place-items: center;
+    padding: 2rem 1rem;
+}
+
+.container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 60px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1,
+h2 {
+    color: #e8f5e9;
+    text-align: center;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+h1 {
+    margin-block: 0.5rem;
+}
+
+h2 {
+    margin-top: 30px;
+}
+
+p {
+    text-align: center;
+    font-size: 16px;
+    margin: 10px 0;
+    font-weight: 400;
+    opacity: 0.8;
+    max-width: 70ch;
+    line-height: 1.5;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Desktop */
+@media (min-width: 600px) {
+    label {
+        display: none;
+    }
+
+    nav {
+        position: static;
+        inset: auto;
+        background: transparent;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 1.5rem;
+        transform: none;
+        transition: none;
+        padding: 0;
+    }
+
+    nav a {
+        font-size: 1rem;
+    }
+}

@@ -1,6 +1,6 @@
 import render from "../render.js";
-import { homeView } from "../views/home.js";
+import { dashbaordView } from "../views/dashbaord.js";
 
 export function homeController() {
-  return render(homeView);
+  return render(dashbaordView);
 }

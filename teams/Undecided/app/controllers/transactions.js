@@ -1,11 +1,11 @@
 import render from "../render.js";
-
-import { addTransactionView } from "../views/transactions.js";
+//import { successfulTransactionView } from "../views/transactions.js";
 import { gettransactions } from "../models/transactions.js";
 import { transactionsView } from "../views/transactions.js";
 import { displayTransactionView } from "../views/transactions.js";
 import { transactionFormView } from "../views/transactions.js";
 import { deleteTransactionView } from "../views/transactions.js"; // Importing necessary views and models for transactions
+import { createTransaction } from "../models/transactions.js";
 
 export function viewTransactionsController() {
   const transactions = gettransactions();
@@ -20,18 +20,41 @@ export function displayTransactionFormController() {
 // GET/ This controller renders the view for the transaction form to add a new transaction
 
 //we will sort this out later.
-export async function addTransactionController() {
+export async function addTransactionController({ request }) {
+  //const url = new URL(request.url);
+  //const newTransaction = url.searchParams.get("new-transaction");
   const formData = await request.formData();
-  const description = formData.get("description");
-  const amount = parseFloat(formData.get("amount"));
 
-  if (isNaN(amount) || amount <= 0 || !description) {
-    return render(addTransactionView, {
-      errors: { message: "Enter a valid amount and description" },
-    }, request);
+  const journal_entry = formData.get("journal_entry")?.trim();
+  const user_id = 1; // Placeholder for user ID, replace with actual user session handlin
+
+  const amount = parseFloat(formData.get("amount"));
+  const category = formData.get("category");
+  const type = formData.get("type");
+  const description = formData.get("description")?.trim();
+  const transaction_date = formData.get("transaction_date");
+  const mood = formData.get("mood");
+
+  if (
+    !journal_entry || isNaN(amount) || amount <= 0 || !category || !type ||
+    !description ||
+    !transaction_date
+  ) {
+    return render(transactionFormView, {
+      errors: { message: "Please enter all required fields correctly" },
+    });
   }
 
-  await createTransaction({ description, amount });
+  await createTransaction({
+    user_id: 1, // Replace with actual user session handling
+    journal_entry,
+    amount,
+    category,
+    description,
+    type,
+    transaction_date,
+    mood,
+  });
 
   // then redirect after submission instead of rendering, cant have dubpilcate transactions/POST resubmits
   return new Response(null, {
@@ -46,6 +69,11 @@ export function displayTransactionController() {
 }
 // This controller renders the view for displaying details of a specific transaction
 
+/*export function successfulTransactionController() {
+  return render(successfulTransactionView, {});
+}
+// This controller renders the view for confirming a successful transaction addition (placeholder implementation)
+*/
 export function deleteTransactionController() {
   return render(deleteTransactionView, {});
 }

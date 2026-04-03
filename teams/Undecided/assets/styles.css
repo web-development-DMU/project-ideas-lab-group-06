@@ -49,7 +49,8 @@ input[type="checkbox"] {
     pointer-events: none;
 }
 
-label {
+/*Hamburger menu styles, need to find the HTML and  do -> for="menu-toggle" class="menu-toggle-label"*/
+/*.menu-label {
     width: 1.75rem;
     height: 1.4rem;
     display: flex;
@@ -58,6 +59,18 @@ label {
     cursor: pointer;
     z-index: 3;
 }
+    */
+
+form label {
+    display: block;
+    width: auto;
+    height: auto;
+    margin-bottom: 0.25rem;
+
+}
+
+
+
 
 label>span {
     display: block;
@@ -188,4 +201,22 @@ p {
         font-size: 1rem;
     }
 
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        border: 1px solid white;
+        padding: 0.6rem;
+    }
+
+    th {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    tr:hover {
+        background: rgba(255, 255, 255, 0.767);
+    }
 }

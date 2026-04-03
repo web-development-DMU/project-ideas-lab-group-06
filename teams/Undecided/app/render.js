@@ -17,11 +17,14 @@ export default function render(viewFn, data, status = 200) {
         <header>
             <h1>A Penny For A Thought</h1>
             <nav>
-                <a href="/">Home</a>
+                 <a href ="/login">Login</a>
+                <a href ="/register">Sign Up</a>
+                <a href="/">Dashboard</a>
                 <a href="/about">About</a>
-                <a href="/teams">Teams</a>
                 <a href="/transactions">Transactions</a>
+
             </nav>
+
         </header>
         <main>
             ${content}

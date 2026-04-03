@@ -1,5 +1,5 @@
-export default function render(viewFn, status = 200) {
-  const content = viewFn();
+export default function render(viewFn, data, status = 200) {
+  const content = viewFn(data);
   const headers = new Headers();
 
   headers.set("Content-Type", "text/html");
@@ -15,11 +15,12 @@ export default function render(viewFn, status = 200) {
         </head>
         <body>
         <header>
-            <h1>Welcome, to A Penny For A Thought</h1>
+            <h1>A Penny For A Thought</h1>
             <nav>
                 <a href="/">Home</a>
                 <a href="/about">About</a>
                 <a href="/teams">Teams</a>
+                <a href="/transactions">Transactions</a>
             </nav>
         </header>
         <main>

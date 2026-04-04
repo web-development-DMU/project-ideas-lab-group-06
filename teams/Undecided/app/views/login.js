@@ -1,3 +1,5 @@
+//import { escape } from "@std/html/entities.js";
+
 export function loginView() {
   return `
   <section aria-labelledBy="login-section">

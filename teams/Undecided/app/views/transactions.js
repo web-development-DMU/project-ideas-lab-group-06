@@ -1,18 +1,19 @@
-export function transactionsView({ transactions }) {
+import { escape } from "jsr:@std/html/entities";
+
+export function allTransactionsView({ transactions }) { // View for displaying all transactions in a table format
   const rowsTransactions = transactions
     .map(
       (tx) =>
         `<tr> 
-      <td>${tx.journal_entry}</td>
-      <td>£${tx.amount}</td>
-      <td>${tx.category}</td>
-      <td>${tx.type}</td>
-      <td>${tx.description}</td>
-      <td>${tx.mood}</td>
+      <td>${escape(tx.journal_entry)}</td>
+      <td>£${tx.amount.toFixed(2) ?? "0.00"}</td>
+      <td>${escape(tx.category)}</td>
+      <td>${escape(tx.type)}</td>
+      <td>${escape(tx.description)}</td>
+      <td>${escape(tx.mood)}</td>
     </tr>`,
     )
     .join("\n");
-  //add escape() later to prevent XSS, but for now we are just using fixed data so it is safe
 
   return `
         <section aria-label="transactions-section">
@@ -40,24 +41,28 @@ export function transactionsView({ transactions }) {
     `;
 }
 
-export function transactionFormView() {
-  //Separate page, only shows the form for creating a new transaction
+export function transactionFormView({ error }) {
+  //Separate page, only shows the form for creating a new transaction/add new trasaction page
+  const errorMessage = error ? `<p class="error">${escape(error)}</p>` : "";
+
   return `
     <section>
       <h2>Add Transaction</h2>
       <form method="POST" action="/transactions">
        <p>Add a transaction here.</p>
+       ${errorMessage}
 
         <br>
 
-        <label for="journal_entry">New Transaction:</label>
+        <label for="journal_entry">Journal Entry:</label>
         <input type="text" id="journal_entry" name="journal_entry" placeholder="Journal Entry" required>
 
         <label for="amount">Amount:(£)</label>
-        <input type="number" id="amount" name="amount" placeholder="Amount" step="0.01" placeholder="0.00" required>
+        <input type="number" id="amount" name="amount" step="0.01" placeholder="0.00" required>
 
         <label for="category">Category:</label>
         <select id="category" name="category" required>
+        <option value="">Select Category</option>
         <option value="Food">Food</option>
         <option value="Transportation">Transportation</option>
         <option value="Housing">Housing</option>
@@ -72,12 +77,12 @@ export function transactionFormView() {
         <label for="transaction_date">Date:</label>
         <input type="date" id="transaction_date" name="transaction_date" required>
 
-        <label for="type">Is this income or expense?</label>
-        <input type="radio" id="type-income" name="type" value="income"> Income required
-        <input type="radio" id="type-expense" name="type" value="expense"> Expense required
+        <legend>Is this income or expense?</legend>
+        <input type="radio" id="type-income" name="type" value="income" required> Income 
+        <input type="radio" id="type-expense" name="type" value="expense" required> Expense
 
-        <label for="description">Description:</label>
-        <textarea id="description" name="description" placeholder="Description of the transaction" required></textarea> 
+        <label for="description">Transaction Description:</label>
+        <textarea id="description" name="description" placeholder="An apple a day keeps the doctor away" required></textarea> 
 
         <label for="mood">Mood:</label>
         <select id="mood" name="mood">
@@ -86,15 +91,14 @@ export function transactionFormView() {
         <option value="Neutral">Neutral</option>
         <option value="Sad">Sad</option>
         </select>
-        
+
         <button type="submit">Add Transaction</button>
       </form>
     </section>
-
     `;
 }
 
-//Probably dont need this, but theres something relying on this
+//Probably dont need this, but theres something relying on this for now
 /*export function successfulTransactionView() {
   return `
         <h2>Hurrah! Transaction Added</h2>

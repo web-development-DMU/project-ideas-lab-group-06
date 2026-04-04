@@ -1,7 +1,7 @@
 import render from "../render.js";
 //import { successfulTransactionView } from "../views/transactions.js";
 import { gettransactions } from "../models/transactions.js";
-import { transactionsView } from "../views/transactions.js";
+import { allTransactionsView } from "../views/transactions.js";
 import { displayTransactionView } from "../views/transactions.js";
 import { transactionFormView } from "../views/transactions.js";
 import { deleteTransactionView } from "../views/transactions.js"; // Importing necessary views and models for transactions
@@ -10,7 +10,7 @@ import { createTransaction } from "../models/transactions.js";
 export function viewTransactionsController() {
   const transactions = gettransactions();
   console.log(transactions);
-  return render(transactionsView, { transactions });
+  return render(allTransactionsView, { transactions });
 }
 // This controller renders the view for displaying all transactions
 
@@ -26,7 +26,7 @@ export async function addTransactionController({ request }) {
   const formData = await request.formData();
 
   const journal_entry = formData.get("journal_entry")?.trim();
-  const user_id = 1; // Placeholder for user ID, replace with actual user session handlin
+  //const user_id = 1; // Placeholder for user ID, replace with actual user session handlin
 
   const amount = parseFloat(formData.get("amount"));
   const category = formData.get("category");
@@ -36,13 +36,13 @@ export async function addTransactionController({ request }) {
   const mood = formData.get("mood");
 
   if (
-    !journal_entry || isNaN(amount) || amount <= 0 || !category || !type ||
-    !description ||
-    !transaction_date
+    !journal_entry || journal_entry.length > 255 || isNaN(amount) ||
+    amount <= 0 || !category || !type ||
+    !description || description.length > 100 ||
+    !transaction_date || !mood
   ) {
-    return render(transactionFormView, {
-      errors: { message: "Please enter all required fields correctly" },
-    });
+    const error = "Please enter all required fields correctly";
+    return render(transactionFormView, { error }, 400);
   }
 
   await createTransaction({

@@ -1,12 +1,13 @@
 import render from "../render.js";
 import { registrationFormView } from "../views/auth.js";
 
-/*import redirect from "../redirect.js";
+import redirect from "../redirect.js";
 import { validateSchema } from "../validation.js";
+
 import { userSchema } from "../schema/user.js";
 import { createUser } from "../models/users.js";
 import { login } from "../models/sessions.js";
-*/
+
 export function registrationFormController({ request }) {
   return render(registrationFormView, {}, request);
 }

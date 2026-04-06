@@ -7,7 +7,11 @@ export function aboutView() {
     <br>
     <p> This is the about page for my project. </p>
     <nav>
-         <a href="/teams">Teams</a>
+          <a href="/">home</a>
+          <a href="/people">people</a>
+          <a href="/proposals">proposals</a>
+          <a href="/teams">Teams</a>
+         <a href="/people/P2872183.html">Thanaa Sulum</a>
     </nav>
     </section>
       `;

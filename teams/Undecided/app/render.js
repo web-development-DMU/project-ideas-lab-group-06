@@ -31,7 +31,7 @@ export default function render(viewFn, data, request, status = 200) {
         <header>
             <h1>A Penny For A Thought</h1>
             <nav>
-                 <a href ="/login">Login</a>
+                 <a href ="/login">Sign in</a>
                 <a href ="/register">Sign Up</a>
                 <a href="/">Dashboard</a>
                 <a href="/about">About</a>

@@ -4,6 +4,14 @@ import { staticController } from "./controllers/static.js";
 import { notFoundController } from "./controllers/notFound.js";
 import { displayTransactionFormController } from "./controllers/transactions.js";
 import { addTransactionController } from "./controllers/transactions.js";
+import {
+  addSessionController,
+  loginFormController,
+} from "./controllers/sessions.js";
+import { loginFormController } from "./controllers/sessions.js";
+import { registerFormController } from "./controllers/users.js";
+import { logoutController } from "./controllers/sessions.js";
+import { addUserController } from "./controllers/users.js";
 
 export default function server(request) {
   const url = new URL(request.url);
@@ -36,20 +44,20 @@ export default function server(request) {
 
   // Authentication routes:
 
-  if (url.pathname === "/auth/login" && request.method === "GET") {
-    return render(loginView, {});
+  if (url.pathname === "/login" && request.method === "GET") {
+    return loginFormController({ request });
   }
-  if (url.pathname === "/auth/login" && request.method === "POST") {
-    return loginController({ request });
+  if (url.pathname === "/login" && request.method === "POST") {
+    return addSessionController({ request });
   }
-  if (url.pathname === "/auth/logout" && request.method === "POST") {
+  if (url.pathname === "/logout" && request.method === "POST") {
     return logoutController({ request });
   }
-  if (url.pathname === "/auth/register" && request.method === "GET") {
-    return render(registerView, {});
+  if (url.pathname === "/register" && request.method === "GET") {
+    return registerFormController({ request });
   }
-  if (url.pathname === "/auth/register" && request.method === "POST") {
-    return registerController({ request });
+  if (url.pathname === "/register" && request.method === "POST") {
+    return addUserController({ request });
   }
 
   return notFoundController({ request }); //pass 404 status code to indicate not found

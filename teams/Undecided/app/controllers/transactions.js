@@ -6,7 +6,8 @@ import { displayTransactionView } from "../views/transactions.js";
 import { transactionFormView } from "../views/transactions.js";
 import { deleteTransactionView } from "../views/transactions.js";
 import { createTransaction } from "../models/transactions.js";
-import { setFlash } from "../flash.js";
+//import { setFlash } from "../flash.js";
+import redirect from "../redirect.js";
 
 export function viewTransactionsController({ request }) {
   const transactions = gettransactions();
@@ -57,10 +58,9 @@ export async function addTransactionController({ request }) {
   };
   await createTransaction(newTransaction); // then redirect after submission instead of rendering, cant have dubpilcate transactions/POST resubmits
   const headers = new Headers();
-  setFlash(headers, "Transaction added successfully! ");
-  headers.set("Location", "/transactions");
-  return new Response(null, { headers, status: 303 });
+  return redirect(headers, "/transactions", "Transaction added successfully!");
 }
+// POST/ This controller handles the submission of the transaction form, validates the input, creates a new transaction, and redirects to the transactions view with a success message.
 
 // POST/ This controller handles the submission of the transaction into the database and renders a confirmation view (placeholder implementation)
 

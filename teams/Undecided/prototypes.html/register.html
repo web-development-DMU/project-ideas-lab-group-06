@@ -1,0 +1,46 @@
+<!DOCTYPE html><html lang="en">
+    
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Group 07</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+    <!--Currently do not have <iframe> stuff to use </iframe> -->
+<header>
+  <h1> User journey through "A Penny For A Thought"</h1>
+
+  </header>
+    <p> 
+    The user lands on the home page, which has options to either log in or register. 
+    If the user chooses to register, they would be directed to a page through a GET request to the registration page, 
+    where they will fill in the form requiring their username, email and password.
+    </p>
+
+    <h2>This is route for the registration Page: </h2>
+  <ul>
+    <li>Route: <em>GET /register</em>, the server displays the registration form for new users.</li>
+    <li>Data required: None.</li>
+    <li>Database Side effects: None.</li>
+    <li>SQL: No SQL required.</li>
+    <li>Response: Returns an HTML page with the registration form.</li>
+  </ul>
+
+   <p> If the user, however, already has an account then they would be sent to the login page, where they only need to input their 
+    username and password, to access the dashboard where they can create transaction, savings entry as well as accessing their insights and goals etc. 
+   </p>
+
+    <h2> This is the route for the login Page: </h2>
+        <ul>
+            <li>Route: <em>GET /login</em>, displays the login form.</li>
+            <li>Data required: None.</li>
+            <li>Database Side effects: None.</li>
+            <li>SQL: No SQL required.</li>
+            <li>Response: Returns the login page HTML.</li>
+        </ul>
+<br>
+        <p> note: <em>There are many more routes, however only two examples are currently shown to demonstrate how the app may work through HTTP requests. </em></p>
+
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group 07</title>
+    <link rel="stylesheet" href="/style.css">
+
+    <style>
+        main {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(500px, 100%), 1fr));
+            gap: 1rem;
+        }
+    </style>
+
+    </head>
+<body>
+    <header>
+        <!--tables/fields/SQL-->
+    <h1>Undecided Team</h1>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/people">People</a>
+        <a href="/proposals">Proposals</a>
+        <a href="/teams/index.html">Teams</a>
+        <a href="/teams/Undecided/index.html">Undecided</a>
+    </nav>
+    </header>
+    <main>
+         <section>
+            <h2>The Database Structure </h2>
+
+            <h3> Tables needed for "A Penny For A Thought"</h3>
+            <p> <i>Ideas for a basic database structure: </i></p>
+            <ul>
+                <li>User: email, user_id (PK), username, hashedPassword, created_at</li>
+                <li>Saving_goals: created_at, completion_status, target_amount, goal_name, user_id (FK), goal_id(PK)</li>
+                <li>Saving_entries: saving_entry_id, goal_id(FK), amount, date </li>
+                <li>Transactions: transaction_id(PK),mood, reflection_note, created_at, category, type(expense/income), transaction_date, amount, mood, user_id(FK), description</li>
+                <li>Daily_summary: daily_total_id(PK), user_id, date, target_spent_total, created_at</li>
+             </ul>
+
+        
+             <p> <b>PK = Primary Key and FK = Foreign Key</b></p>
+             <p> Mood and reflections_note are fields that support insight queries. </p>
+        </section>
+
+        <section>
+            <h3>Fields and relationships: </h3>
+            <p> There will be just one to many relationships between the tables.</p>
+            <ul>
+                <li>A user has many saving entries</li>
+                <li>A user has many saving goals</li>
+                <li>A savings goal has many savings entries</li>
+                <li>A user has many transactions</li>
+                <li>A user has many daily summaries</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3> Example SQL Schema Design </h3>
+               <ul>
+                <li>INSERT INTO transactions ...</li>
+                <li>SELECT * FROM transactions WHERE user_id = ? ORDER BY transaction_date DESC;</li>
+                <li>UPDATE transactions SET ... WHERE transaction_id = ? AND user_id = ?;</li>
+                <li>DELETE FROM transactions WHERE transaction_id = ? AND user_id = ?;</li>
+                <li>Monthly totals: SELECT SUM(amount) ... WHERE type='expense' AND date LIKE 'YYYY-MM%';</li>
+                <li>Goal progress: SELECT SUM(amount) FROM savings_entries WHERE goal_id = ?;</li>
+              </ul>
+              <p> INCLUDE MORE SQL QUERIES HERE!!!</p>
+
+              <pre><code> 
+                CREATE TABLE transaction (
+                transaction_id UNIQUEIDENTIFIER PRIMARY KEY,
+                mood VARCHAR(25),
+                reflection_note TEXT,
+                created_at DATETIME,
+                category VARCHAR(25),
+                type VARCHAR(8),
+                transaction_date DATE,
+                amount DECIMAL(10, 2),
+                user_id UNIQUEIDENTIFIER,
+                description TEXT
+                );
+              </code></pre>
+
+              <pre><code class="language-sql">
+                CREATE TABLE user (
+                user_id UNIQUEIDENTIFIER PRIMARY KEY,
+                email VARCHAR(25) UNIQUE,
+                username VARCHAR(50) UNIQUE,
+                password_hash VARCHAR(25),
+                created_at DATETIME
+                );
+
+
+              </code></pre>
+              
+
+        </section>
+
+         <section aria-labelledby="Honerable-Mention">
+            <h3 id="Honerable-Mention">This is an Honorable Mention</h3>
+        </section>
+
+        <section>
+
+            <h3> ?</h3>
+
+        </section>
+
+    </main>
+</body> 
+</html>

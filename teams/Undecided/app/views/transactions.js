@@ -1,12 +1,11 @@
-import { escape } from "jsr:@std/html/entities";
-
+import { escape } from "@std/html/entities"; //this is bascially the browser.
 export function allTransactionsView({ transactions }) { // View for displaying all transactions in a table format
   const rowsTransactions = transactions
     .map(
       (tx) =>
         `<tr> 
       <td>${escape(tx.journal_entry)}</td>
-      <td>£${tx.amount.toFixed(2) ?? "0.00"}</td>
+      <td>£${tx.amount.toFixed(2)}</td>
       <td>${escape(tx.category)}</td>
       <td>${escape(tx.type)}</td>
       <td>${escape(tx.description)}</td>
@@ -48,14 +47,14 @@ export function transactionFormView({ error }) {
   return `
     <section>
       <h2>Add Transaction</h2>
+      ${errorMessage}
       <form method="POST" action="/transactions">
        <p>Add a transaction here.</p>
-       ${errorMessage}
 
         <br>
 
         <label for="journal_entry">Journal Entry:</label>
-        <input type="text" id="journal_entry" name="journal_entry" placeholder="Journal Entry" required>
+        <input type="text" id="journal_entry" name="journal_entry" maxlength="255" placeholder="Journal Entry" required>
 
         <label for="amount">Amount:(£)</label>
         <input type="number" id="amount" name="amount" step="0.01" placeholder="0.00" required>
@@ -76,20 +75,25 @@ export function transactionFormView({ error }) {
 
         <label for="transaction_date">Date:</label>
         <input type="date" id="transaction_date" name="transaction_date" required>
-
+    <fieldset>
         <legend>Is this income or expense?</legend>
         <input type="radio" id="type-income" name="type" value="income" required> Income 
         <input type="radio" id="type-expense" name="type" value="expense" required> Expense
-
+    </fieldset>
         <label for="description">Transaction Description:</label>
-        <textarea id="description" name="description" placeholder="An apple a day keeps the doctor away" required></textarea> 
+        <textarea id="description" name="description" maxlength="100" placeholder="An apple a day keeps the doctor away" required></textarea> 
 
         <label for="mood">Mood:</label>
         <select id="mood" name="mood">
         <option value="">Select Mood</option>
         <option value="Happy">Happy</option>
+        <option value="Content">Content</option>
+        <option value="Stressed">Stressed</option>
         <option value="Neutral">Neutral</option>
         <option value="Sad">Sad</option>
+        <option value="Anxious">Anxious</option>
+        <option value="Excited">Excited</option>
+        <option value="Frustrated">Frustrated</option>
         </select>
 
         <button type="submit">Add Transaction</button>

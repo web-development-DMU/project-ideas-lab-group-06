@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Group 07</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+
+  <h1>HTTP Interactions</h1>
+
+  <h2>Home Page</h2>
+  <ul>
+    <li>Route: <em>GET /</em>, the server displays the home page for the application, which introduces the app and provides navigation links to register, log in, or access the dashboard if the user is already authenticated.</li>
+    <li>Data required: None.</li>
+    <li>Database Side effects: None.</li>
+    <li>SQL: No SQL required.</li>
+    <li>Response: Returns an HTML page.</li>
+  </ul>
+
+  <h2>Registration Page</h2>
+  <ul>
+    <li>Route: <em>GET /register</em>, the server displays the registration form for new users.</li>
+    <li>Data required: None.</li>
+    <li>Database Side effects: None.</li>
+    <li>SQL: No SQL required.</li>
+    <li>Response: Returns an HTML page with the registration form.</li>
+  </ul>
+
+  <h2>Register New User</h2>
+  <ul>
+    <li>Route: <em>POST /register</em>, creates a new user account.</li>
+    <li>Data required: username, email, and password.</li>
+    <li>Database Side effects: Creates a new record in the users table.</li>
+    <li>SQL: INSERT INTO users (username, email, hashedPassword) VALUES (?, ?, ?);</li>
+    <li>Response: Redirects to /login on success, or returns the registration page HTML with validation errors.</li>
+  </ul>
+
+  <h2>Login Page</h2>
+  <ul>
+    <li>Route: <em>GET /login</em>, displays the login form.</li>
+    <li>Data required: None.</li>
+    <li>Database Side effects: None.</li>
+    <li>SQL: No SQL required.</li>
+    <li>Response: Returns the login page HTML.</li>
+  </ul>
+
+  <h2>Login User</h2>
+  <ul>
+    <li>Route: <em>POST /login</em>, authenticates the user and creates a session.</li>
+    <li>Data required: username and password.</li>
+    <li>Database Side effects: Creates a new record in the sessions table.</li>
+    <li>SQL: SELECT * FROM users WHERE username = ?; INSERT INTO sessions (id, user_id) VALUES (?, ?);</li>
+    <li>Response: Redirects to /dashboard on success, or returns the login page HTML with validation errors on failure.</li>
+  </ul>
+
+  <h2>Logout User</h2>
+  <ul>
+    <li>Route: <em>POST /logout</em>, logs the user out by removing their session.</li>
+    <li>Data required: session cookie, session id.</li>
+    <li>Database Side effects: User's session is removed from the sessions table.</li>
+    <li>SQL: DELETE FROM sessions WHERE id = ?;</li>
+    <li>Response: Redirects to / or /login.</li>
+  </ul>
+
+  <h2>Dashboard</h2>
+  <ul>
+    <li>Route: <em>GET /dashboard</em>, displays the user dashboard.</li>
+    <li>Data required: session cookie, user id.</li>
+    <li>Database Side effects: None.</li>
+    <li>SQL: SELECT * FROM transactions WHERE user_id = ?; SELECT * FROM saving_goals WHERE user_id = ?;</li>
+    <li>Response: Returns dashboard HTML.</li>
+  </ul>
+
+  <h2>View Transactions</h2>
+  <ul>
+    <li>Route: <em>GET /transactions</em>, displays all user transactions.</li>
+    <li>Data required: session cookie, user id.</li>
+    <li>Database Side effects: None.</li>
+    <li>SQL: SELECT * FROM transactions WHERE user_id = ? ORDER BY date DESC;</li>
+    <li>Response: Returns the transactions page HTML.</li>
+  </ul>
+
+  <h2>New Transaction Form</h2>
+  <ul>
+    <li>Route: <em>GET /transactions/new</em>, displays the add transaction form.</li>
+    <li>Data required: session cookie, user id.</li>
+    <li>Database Side effects: None.</li>
+    <li>SQL: No SQL required.</li>
+    <li>Response: Returns the form HTML.</li>
+  </ul>
+
+  <h2>Create Transaction</h2>
+  <ul>
+    <li>Route: <em>POST /transactions</em>, adds a new transaction.</li>
+    <li>Data required: amount, category, date, mood, reflection_note.</li>
+    <li>Database Side effects: Creates a new record in the transactions table.</li>
+    <li>SQL: INSERT INTO transactions (user_id, amount, category, date, mood, reflection_note) VALUES (?, ?, ?, ?, ?, ?);</li>
+    <li>Response: Redirects to /transactions.</li>
+  </ul>
+
+  <h2>View Single Transaction</h2>
+  <ul>
+    <li>Route: <em>GET /transactions/:transactionId</em>, displays one transaction.</li>
+    <li>Data required: transactionId, user id.</li>
+    <li>Database Side effects: None.</li>
+    <li>SQL: SELECT * FROM transactions WHERE transaction_id = ? AND user_id = ?;</li>
+    <li>Response: Returns transaction detail HTML.</li>
+  </ul>
+
+  <h2>Delete Transaction</h2>
+  <ul>
+    <li>Route: <em>POST /transactions/:transactionId/delete</em>, deletes a transaction.</li>
+    <li>Data required: transactionId, user id.</li>
+    <li>Database Side effects: Removes a record from the transactions table.</li>
+    <li>SQL: DELETE FROM transactions WHERE transaction_id = ? AND user_id = ?;</li>
+    <li>Response: Redirects to /transactions.</li>
+  </ul>
+
+  <h2>View Saving Goals</h2>
+  <ul>
+    <li>Route: <em>GET /saving-goals</em>, displays all saving goals.</li>
+    <li>Data required: session cookie, user id.</li>
+    <li>Database Side effects: None.</li>
+    <li>SQL: SELECT * FROM saving_goals WHERE user_id = ?;</li>
+    <li>Response: Returns saving goals HTML.</li>
+  </ul>
+
+  <h2>Create Saving Goal</h2>
+  <ul>
+    <li>Route: <em>POST /saving-goals</em>, creates a new saving goal.</li>
+    <li>Data required: goal_name, target_amount.</li>
+    <li>Database Side effects: Creates a new record in the saving_goals table.</li>
+    <li>SQL: INSERT INTO saving_goals (user_id, goal_name, target_amount) VALUES (?, ?, ?);</li>
+    <li>Response: Redirects to /saving-goals.</li>
+  </ul>
+
+  <h2>View Single Saving Goal</h2>
+  <ul>
+    <li>Route: <em>GET /saving-goals/:goalId</em>, displays one saving goal.</li>
+    <li>Data required: goalId, user id.</li>
+    <li>Database Side effects: None.</li>
+    <li>SQL: SELECT * FROM saving_goals WHERE goal_id = ? AND user_id = ?; SELECT * FROM saving_entries WHERE goal_id = ?;</li>
+    <li>Response: Returns saving goal detail HTML.</li>
+  </ul>
+
+  <h2>Add Saving Entry</h2>
+  <ul>
+    <li>Route: <em>POST /saving-goals/:goalId/entries</em>, adds money to a saving goal.</li>
+    <li>Data required: goalId, amount, date, description.</li>
+    <li>Database Side effects: Creates a new record in the saving_entries table.</li>
+    <li>SQL: INSERT INTO saving_entries (goal_id, amount, date, description) VALUES (?, ?, ?, ?);</li>
+    <li>Response: Redirects to /saving-goals/:goalId.</li>
+  </ul>
+
+  <h2>Delete Saving Entry</h2>
+  <ul>
+    <li>Route: <em>POST /saving-entries/:entryId/delete</em>, deletes a saving entry.</li>
+    <li>Data required: entryId.</li>
+    <li>Database Side effects: Removes a record from the saving_entries table.</li>
+    <li>SQL: DELETE FROM saving_entries WHERE savings_entry_id = ?;</li>
+    <li>Response: Redirects to the saving goal page.</li>
+  </ul>
+
+  <h2>Insights Page</h2>
+  <ul>
+    <li>Route: <em>GET /insights</em>, displays financial insights.</li>
+    <li>Data required: user id.</li>
+    <li>Database Side effects: None.</li>
+    <li>SQL: SELECT category, SUM(amount) AS total_spent FROM transactions WHERE user_id = ? GROUP BY category;</li>
+    <li>Response: Returns the insights HTML page.</li>
+  </ul>
+
+</body>
+</html>
+

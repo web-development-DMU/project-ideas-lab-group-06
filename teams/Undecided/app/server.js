@@ -11,6 +11,7 @@ export default function server(request) {
 
   //console.log(url.searchParams.get("new-transaction"));
 
+  // Static assets route, landin page route, and 404 route
   if (url.pathname.startsWith("/assets/")) {
     return staticController({ request });
   }
@@ -18,6 +19,8 @@ export default function server(request) {
   if (url.pathname === "/" && request.method === "GET") {
     return homeController({ request });
   }
+
+  // Transaction routes:
 
   if (url.pathname === "/transactions" && request.method === "GET") {
     return viewTransactionsController({ request });
@@ -29,6 +32,24 @@ export default function server(request) {
 
   if (url.pathname === "/transactions" && request.method === "POST") {
     return addTransactionController({ request });
+  }
+
+  // Authentication routes:
+
+  if (url.pathname === "/auth/login" && request.method === "GET") {
+    return render(loginView, {});
+  }
+  if (url.pathname === "/auth/login" && request.method === "POST") {
+    return loginController({ request });
+  }
+  if (url.pathname === "/auth/logout" && request.method === "POST") {
+    return logoutController({ request });
+  }
+  if (url.pathname === "/auth/register" && request.method === "GET") {
+    return render(registerView, {});
+  }
+  if (url.pathname === "/auth/register" && request.method === "POST") {
+    return registerController({ request });
   }
 
   return notFoundController({ request }); //pass 404 status code to indicate not found

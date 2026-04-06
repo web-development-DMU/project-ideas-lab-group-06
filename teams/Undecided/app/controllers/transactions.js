@@ -4,31 +4,30 @@ import { gettransactions } from "../models/transactions.js";
 import { allTransactionsView } from "../views/transactions.js";
 import { displayTransactionView } from "../views/transactions.js";
 import { transactionFormView } from "../views/transactions.js";
-import { deleteTransactionView } from "../views/transactions.js"; // Importing necessary views and models for transactions
+import { deleteTransactionView } from "../views/transactions.js";
 import { createTransaction } from "../models/transactions.js";
+import { setFlash } from "../flash.js";
 
-export function viewTransactionsController() {
+export function viewTransactionsController({ request }) {
   const transactions = gettransactions();
-  console.log(transactions);
-  return render(allTransactionsView, { transactions });
+  //console.log(transactions); -> for debugging purposes to check if transactions are being retrieved correctly, dont need it, remove later
+  return render(allTransactionsView, { transactions }, request);
 }
 // This controller renders the view for displaying all transactions
 
-export function displayTransactionFormController() {
-  return render(transactionFormView, {});
+export function displayTransactionFormController({ request }) {
+  return render(transactionFormView, {}, request);
 }
 // GET/ This controller renders the view for the transaction form to add a new transaction
+//it is compeletely separate from the addTransactionController, which handles the POST request when the form is submitted.
+//This separation allows for better organization and clarity in handling different HTTP methods and their corresponding views and logic.
 
 //we will sort this out later.
 export async function addTransactionController({ request }) {
-  //const url = new URL(request.url);
-  //const newTransaction = url.searchParams.get("new-transaction");
   const formData = await request.formData();
-
+  //const user_Id = 1; // Replace with actual user session handling
   const journal_entry = formData.get("journal_entry")?.trim();
-  //const user_id = 1; // Placeholder for user ID, replace with actual user session handlin
-
-  const amount = parseFloat(formData.get("amount"));
+  const amount = parseFloat(formData.get("amount") || "");
   const category = formData.get("category");
   const type = formData.get("type");
   const description = formData.get("description")?.trim();
@@ -39,13 +38,14 @@ export async function addTransactionController({ request }) {
     !journal_entry || journal_entry.length > 255 || isNaN(amount) ||
     amount <= 0 || !category || !type ||
     !description || description.length > 100 ||
-    !transaction_date || !mood
+    !transaction_date
   ) {
-    const error = "Please enter all required fields correctly";
-    return render(transactionFormView, { error }, 400);
+    //removed section here btw
+    const error = "Invalid input. Please check your entries and try again.";
+    return render(transactionFormView, { error }, request, 400);
   }
 
-  await createTransaction({
+  const newTransaction = {
     user_id: 1, // Replace with actual user session handling
     journal_entry,
     amount,
@@ -54,27 +54,23 @@ export async function addTransactionController({ request }) {
     type,
     transaction_date,
     mood,
-  });
-
-  // then redirect after submission instead of rendering, cant have dubpilcate transactions/POST resubmits
-  return new Response(null, {
-    status: 303,
-    headers: { location: "/transactions" },
-  });
+  };
+  await createTransaction(newTransaction); // then redirect after submission instead of rendering, cant have dubpilcate transactions/POST resubmits
+  const headers = new Headers();
+  setFlash(headers, "Transaction added successfully! ");
+  headers.set("Location", "/transactions");
+  return new Response(null, { headers, status: 303 });
 }
+
 // POST/ This controller handles the submission of the transaction into the database and renders a confirmation view (placeholder implementation)
 
-export function displayTransactionController() {
-  return render(displayTransactionView, {});
+//these two are not complete yet, just placeholders for now, we will work on them later.
+export function displayTransactionController({ request }) {
+  return render(displayTransactionView, {}, request);
 }
 // This controller renders the view for displaying details of a specific transaction
 
-/*export function successfulTransactionController() {
-  return render(successfulTransactionView, {});
-}
-// This controller renders the view for confirming a successful transaction addition (placeholder implementation)
-*/
-export function deleteTransactionController() {
-  return render(deleteTransactionView, {});
+export function deleteTransactionController({ request }) {
+  return render(deleteTransactionView, {}, request);
 }
 // This controller handles the deletion of a transaction (placeholder implementation)

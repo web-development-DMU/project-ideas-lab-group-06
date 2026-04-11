@@ -38,7 +38,6 @@ export async function addSessionController({ request }) {
       400,
     );
   }
-
   const sessionId = crypto.randomUUID(); // Generates a unique session ID
   createSession(sessionId, user.user_id);
 

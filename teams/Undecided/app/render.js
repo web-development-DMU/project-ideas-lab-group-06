@@ -67,11 +67,11 @@ export default function render(viewFn, data = {}, request, status = 200) {
     setTimeout(() => {
       flash.style.opacity = "0";
       flash.style.transform = "translateY(-10px)";
-    }, 2500); // wait 2.5 seconds
+    }, 2500);
 
     setTimeout(() => {
       flash.remove();
-    }, 3000); // remove after fade
+    }, 3000);
   }
 </script>
     </html>
